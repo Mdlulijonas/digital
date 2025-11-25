@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiHive - Professional Platform for Digital Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== CSS VARIABLES ========== */
+        :root {
+            /* Bee-themed color palette */
+            --primary: #fbbf24;          /* Honey yellow */
+            --primary-dark: #f59e0b;     /* Darker yellow */
+            --secondary: #92400e;        /* Amber/brown */
+            --accent: #d97706;           /* Orange accent */
+            --dark: #1e293b;             /* Dark text */
+            --darker: #0f172a;           /* Darker text */
+            --light: #fefce8;            /* Light yellow background */
+            --gray: #64748b;             /* Gray text */
+            --gray-light: #e2e8f0;       /* Light gray */
+            --success: #10b981;          /* Success green */
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* ========== RESET & BASE STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== HEADER & NAVIGATION ========== */
+        header {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--darker);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .bee-logo {
+            margin-right: 8px;
+            font-size: 1.8rem;
+            transition: transform 0.5s ease;
+            position: relative;
+        }
+        
+        .bee-logo .bee-body {
+            color: var(--primary);
+        }
+        
+        .bee-logo .bee-wings {
+            color: rgba(255, 255, 255, 0.8);
+            position: absolute;
+            top: -2px;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .logo:hover .bee-logo {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        /* ========== BUTTON STYLES ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: var(--darker);
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--gray-light);
+            color: var(--dark);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--gray-light);
+            color: var(--dark);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background-color: #e69500;
+        }
+        
+        /* ========== HERO SECTION ========== */
+        .hero {
+            padding: 6rem 0 4rem;
+            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: fadeInRight 1s ease 0.3s forwards;
+        }
+        
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--darker);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+        
+        .hero-badges {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+        
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+        
+        .badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .badge i {
+            color: var(--success);
+        }
+        
+        /* ========== ANIMATED STALL SECTION ========== */
+        .stall-scene {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stall {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 200px;
+        }
+        
+        .stall-base {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background: #8B4513;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .stall-counter {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            height: 10px;
+            background: #D2691E;
+        }
+        
+        .stall-roof {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 40px;
+            background: #A52A2A;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+            animation: roofBuild 2s ease forwards;
+            transform-origin: top;
+        }
+        
+        @keyframes roofBuild {
+            0% { transform: translateX(-50%) scaleY(0); }
+            100% { transform: translateX(-50%) scaleY(1); }
+        }
+        
+        .stall-pole {
+            position: absolute;
+            bottom: 20px;
+            width: 10px;
+            height: 180px;
+            background: #8B4513;
+            animation: poleBuild 1s ease forwards;
+            transform-origin: bottom;
+        }
+        
+        .stall-pole.left {
+            left: 20px;
+        }
+        
+        .stall-pole.right {
+            right: 20px;
+        }
+        
+        @keyframes poleBuild {
+            0% { transform: scaleY(0); }
+            100% { transform: scaleY(1); }
+        }
+        
+        .stall-sign {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--darker);
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: signHang 1s ease 1.5s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes signHang {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .cartoon-character {
+            position: absolute;
+            bottom: 30px;
+            width: 60px;
+            height: 80px;
+            animation: characterMove 10s infinite ease-in-out;
+        }
+        
+        .character-1 {
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .character-2 {
+            left: 30%;
+            animation-delay: 1s;
+        }
+        
+        .character-3 {
+            right: 30%;
+            animation-delay: 2s;
+        }
+        
+        .character-4 {
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes characterMove {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(-5deg); }
+        }
+        
+        .character-body {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50% 50% 40% 40%;
+            bottom: 0;
+            left: 10px;
+        }
+        
+        .character-head {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #FFDAB9;
+            border-radius: 50%;
+            bottom: 45px;
+            left: 15px;
+        }
+        
+        .character-arm {
+            position: absolute;
+            width: 8px;
+            height: 30px;
+            background: #FFDAB9;
+            border-radius: 4px;
+            bottom: 25px;
+            animation: armWave 2s infinite ease-in-out;
+        }
+        
+        .character-arm.left {
+            left: 5px;
+            transform-origin: top center;
+        }
+        
+        .character-arm.right {
+            right: 5px;
+            transform-origin: top center;
+            animation-delay: 1s;
+        }
+        
+        @keyframes armWave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-30deg); }
+        }
+        
+        .product-box {
+            position: absolute;
+            width: 30px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 5px;
+            bottom: 60px;
+            animation: productFloat 4s infinite ease-in-out;
+        }
+        
+        .product-box:nth-child(1) {
+            left: 15%;
+            animation-delay: 0s;
+        }
+        
+        .product-box:nth-child(2) {
+            left: 25%;
+            animation-delay: 0.5s;
+        }
+        
+        .product-box:nth-child(3) {
+            right: 25%;
+            animation-delay: 1s;
+        }
+        
+        .product-box:nth-child(4) {
+            right: 15%;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes productFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .bubble {
+            position: absolute;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            animation: bubblePop 4s infinite ease-in-out;
+        }
+        
+        .bubble-1 {
+            top: 20%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+        
+        .bubble-2 {
+            top: 30%;
+            right: 20%;
+            animation-delay: 3s;
+        }
+        
+        .bubble-3 {
+            top: 40%;
+            left: 25%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes bubblePop {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* ========== PRODUCTS MARKETPLACE SECTION ========== */
+        .marketplace {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+        
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .product-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 1px solid var(--gray-light);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: var(--darker);
+            border-color: var(--primary);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 3rem;
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+        }
+        
+        .product-category {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--darker);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--darker);
+        }
+        
+        .product-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--darker);
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--accent);
+        }
+        
+        /* ========== ACCOUNT MODAL ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-close:hover {
+            color: var(--dark);
+        }
+        
+        .modal-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--darker);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--darker);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-footer p {
+            margin-top: 1rem;
+            color: var(--gray);
+        }
+        
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ========== FEATURES SECTION ========== */
+        .features {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        /* ========== PRICING SECTION ========== */
+        .pricing {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+        
+        .toggle-label {
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-light);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .pricing-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            right: 2rem;
+            background: var(--primary);
+            color: var(--darker);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0 0 8px 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .card-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .card-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--darker);
+        }
+        
+        .card-header p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .price {
+            display: flex;
+            align-items: flex-end;
+            margin: 1.5rem 0;
+        }
+        
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--darker);
+            line-height: 1;
+        }
+        
+        .price-period {
+            color: var(--gray);
+            margin-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem 2rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .features-list li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        /* ========== CTA SECTION ========== */
+        .cta {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0V100H1000V0C750,50 500,100 250,50S0,0,0,0Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            animation: wave 10s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100px); }
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .cta-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+            font-size: 1.125rem;
+            padding: 1rem 2rem;
+        }
+        
+        .cta .btn:hover {
+            background: var(--gray-light);
+            transform: translateY(-2px);
+        }
+        
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--darker);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                margin-bottom: 3rem;
+            }
+            
+            .hero-badges {
+                justify-content: center;
+            }
+            
+            .stall-scene {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .cta h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .stall-scene {
+                height: 250px;
+            }
+            
+            .stall {
+                width: 250px;
+            }
+            
+            .cartoon-character {
+                width: 50px;
+                height: 70px;
+            }
+            
+            .character-body {
+                width: 35px;
+                height: 45px;
+            }
+            
+            .character-head {
+                width: 25px;
+                height: 25px;
+                bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== HEADER & NAVIGATION ========== -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <div class="bee-logo">
+                        <i class="fas fa-bee bee-body"></i>
+                        <i class="fas fa-feather-alt bee-wings"></i>
+                    </div>
+                    Digi<span>Hive</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#marketplace">Marketplace</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#affiliate">Affiliate Program</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="#" class="btn-outline btn" id="login-btn">Log In</a>
+                    <a href="#" class="btn" id="signup-btn">Create Account</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Sell & Buy Digital Products with Ease</h1>
+                    <p>Join DigiHive to create your own digital store or purchase from our marketplace. No account needed to buy featured products!</p>
+                    <a href="#marketplace" class="btn">Browse Products <i class="fas fa-arrow-right"></i></a>
+                    <div class="hero-badges">
+                        <div class="badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>No account needed to buy</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Instant digital delivery</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <!-- Animated Stall Scene -->
+                    <div class="stall-scene">
+                        <div class="stall">
+                            <div class="stall-roof"></div>
+                            <div class="stall-pole left"></div>
+                            <div class="stall-pole right"></div>
+                            <div class="stall-base"></div>
+                            <div class="stall-counter"></div>
+                            <div class="stall-sign">Digital Products</div>
+                        </div>
+                        
+                        <!-- Cartoon Characters -->
+                        <div class="cartoon-character character-1">
+                            <div class="character-head"></div>
+                            <div class="character-body"></div>
+                            <div class="character-arm left"></div>
+                            <div class="character-arm right"></div>
+                        </div>
+                        <div class="cartoon-character character-2">
+                            <div class="character-head"></div>
+                            <div class="character-body" style="background: var(--secondary);"></div>
+                            <div class="character-arm left"></div>
+                            <div class="character-arm right"></div>
+                        </div>
+                        <div class="cartoon-character character-3">
+                            <div class="character-head"></div>
+                            <div class="character-body" style="background: var(--accent);"></div>
+                            <div class="character-arm left"></div>
+                            <div class="character-arm right"></div>
+                        </div>
+                        <div class="cartoon-character character-4">
+                            <div class="character-head"></div>
+                            <div class="character-body" style="background: var(--success);"></div>
+                            <div class="character-arm left"></div>
+                            <div class="character-arm right"></div>
+                        </div>
+                        
+                        <!-- Floating Product Boxes -->
+                        <div class="product-box"></div>
+                        <div class="product-box"></div>
+                        <div class="product-box"></div>
+                        <div class="product-box"></div>
+                        
+                        <!-- Speech Bubbles -->
+                        <div class="bubble bubble-1">Easy setup!</div>
+                        <div class="bubble bubble-2">Sell worldwide!</div>
+                        <div class="bubble bubble-3">Start earning!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PRODUCTS MARKETPLACE SECTION ========== -->
+    <section class="marketplace" id="marketplace">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Digital Products</h2>
+                <p>Browse our collection of digital products. Purchase instantly without creating an account.</p>
+            </div>
+            
+            <div class="product-categories">
+                <button class="category-btn active" data-category="all">All Products</button>
+                <button class="category-btn" data-category="ebooks">E-Books</button>
+                <button class="category-btn" data-category="coloring">Coloring Books</button>
+                <button class="category-btn" data-category="art">Digital Art</button>
+                <button class="category-btn" data-category="photography">Photography</button>
+                <button class="category-btn" data-category="stock">Stock Content</button>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Product 1: E-Book -->
+                <div class="product-card" data-category="ebooks">
+                    <div class="product-image">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">E-Book</span>
+                        <h3 class="product-title">Digital Marketing Mastery</h3>
+                        <p class="product-description">Complete guide to digital marketing strategies for small businesses.</p>
+                        <div class="product-footer">
+                            <div class="product-price">R149</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2: Coloring Book -->
+                <div class="product-card" data-category="coloring">
+                    <div class="product-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">Coloring Book</span>
+                        <h3 class="product-title">Floral Patterns Collection</h3>
+                        <p class="product-description">50+ beautiful floral patterns for relaxation and creativity.</p>
+                        <div class="product-footer">
+                            <div class="product-price">R89</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3: Digital Art -->
+                <div class="product-card" data-category="art">
+                    <div class="product-image">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">Digital Art</span>
+                        <h3 class="product-title">Abstract Landscape Pack</h3>
+                        <p class="product-description">10 high-resolution abstract landscape illustrations.</p>
+                        <div class="product-footer">
+                            <div class="product-price">R199</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4: Photography -->
+                <div class="product-card" data-category="photography">
+                    <div class="product-image">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">Photography</span>
+                        <h3 class="product-title">Urban Architecture Set</h3>
+                        <p class="product-description">Collection of 25 professional urban architecture photos.</p>
+                        <div class="product-footer">
+                            <div class="product-price">R249</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 5: Stock Content -->
+                <div class="product-card" data-category="stock">
+                    <div class="product-image">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">Stock Content</span>
+                        <h3 class="product-title">Business Video Templates</h3>
+                        <p class="product-description">10 customizable business presentation video templates.</p>
+                        <div class="product-footer">
+                            <div class="product-price">R399</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.6</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 6: E-Book -->
+                <div class="product-card" data-category="ebooks">
+                    <div class="product-image">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">E-Book</span>
+                        <h3 class="product-title">Productivity Hacks Guide</h3>
+                        <p class="product-description">50 proven productivity techniques for remote workers.</p>
+                        <div class="product-footer">
+                            <div class="product-price">R129</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FEATURES SECTION ========== -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose DigiHive?</h2>
+                <p>Our platform provides all the tools to create, manage, and grow your digital business.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Easy Store Setup</h3>
+                    <p>Create your own digital store in minutes with our intuitive setup wizard.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Global Payments</h3>
+                    <p>Accept payments in multiple currencies from customers around the world.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Sales Analytics</h3>
+                    <p>Track your sales, customer behavior, and performance with detailed analytics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Instant Delivery</h3>
+                    <p>Automatically deliver digital products to customers immediately after purchase.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Platform</h3>
+                    <p>All transactions are encrypted and secure with industry-standard protocols.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Affiliate System</h3>
+                    <p>Grow your sales with a built-in affiliate program for product promotion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PRICING SECTION ========== -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the plan that fits your business needs. All plans include a 21-day free trial.</p>
+            </div>
+            
+            <div class="pricing-toggle">
+                <span class="toggle-label">Monthly</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="billing-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Annual <small>(Save 20%)</small></span>
+            </div>
+            
+            <div class="pricing-cards">
+                <!-- Starter Plan -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3>Starter</h3>
+                        <p>Perfect for new creators</p>
+                        <div class="price">
+                            <span class="price-amount">R179</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="features-list">
+                            <li>Up to R50,000 in annual sales</li>
+                            <li>25 product uploads</li>
+                            <li>Custom store design</li>
+                            <li>Basic analytics</li>
+                            <li>Email support</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline" style="width: 100%; text-align: center;">Start Free Trial</a>
+                    </div>
+                </div>
+                
+                <!-- Business Plan -->
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="card-header">
+                        <h3>Business</h3>
+                        <p>For growing businesses</p>
+                        <div class="price">
+                            <span class="price-amount">R379</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="features-list">
+                            <li>Up to R250,000 in annual sales</li>
+                            <li>Unlimited products</li>
+                            <li>Advanced store customization</li>
+                            <li>Email marketing tools</li>
+                            <li>Affiliate program access</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <a href="#" class="btn" style="width: 100%; text-align: center;">Start Free Trial</a>
+                    </div>
+                </div>
+                
+                <!-- Premium Plan -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3>Premium</h3>
+                        <p>For established brands</p>
+                        <div class="price">
+                            <span class="price-amount">R779</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="features-list">
+                            <li>Unlimited annual sales</li>
+                            <li>White-label branding</li>
+                            <li>Advanced analytics</li>
+                            <li>API access</li>
+                            <li>Featured placement</li>
+                            <li>Dedicated account manager</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline" style="width: 100%; text-align: center;">Start Free Trial</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA SECTION ========== -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Digital Business?</h2>
+                <p>Join thousands of creators who are already growing their business with DigiHive.</p>
+                <a href="#" class="btn" id="cta-signup">Start Your Free Trial Today <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DigiHive</h3>
+                    <p>Professional platform for selling digital products worldwide.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#marketplace">Marketplace</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#affiliate">Affiliate Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2023 DigiHive. All rights reserved.
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== ACCOUNT MODALS ========== -->
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="login-close">&times;</button>
+            <div class="modal-header">
+                <h2>Log In to Your Account</h2>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Email Address</label>
+                    <input type="email" id="login-email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Log In</button>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" id="show-signup">Sign up here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="signup-close">&times;</button>
+            <div class="modal-header">
+                <h2>Create Your Account</h2>
+            </div>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label class="form-label" for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" class="form-input" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signup-password">Password</label>
+                    <input type="password" id="signup-password" class="form-input" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" class="form-input" placeholder="Confirm your password" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Create Account</button>
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" id="show-login">Log in here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ========== MODAL FUNCTIONALITY ==========
+        // Get modal elements
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const ctaSignup = document.getElementById('cta-signup');
+        const loginClose = document.getElementById('login-close');
+        const signupClose = document.getElementById('signup-close');
+        const showSignup = document.getElementById('show-signup');
+        const showLogin = document.getElementById('show-login');
+
+        // Open login modal
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.add('active');
+        });
+
+        // Open signup modal
+        signupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.classList.add('active');
+        });
+
+        // Open signup modal from CTA
+        ctaSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.classList.add('active');
+        });
+
+        // Close modals
+        loginClose.addEventListener('click', () => {
+            loginModal.classList.remove('active');
+        });
+
+        signupClose.addEventListener('click', () => {
+            signupModal.classList.remove('active');
+        });
+
+        // Switch between login and signup modals
+        showSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.remove('active');
+            signupModal.classList.add('active');
+        });
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.classList.remove('active');
+            loginModal.classList.add('active');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+            }
+            if (e.target === signupModal) {
+                signupModal.classList.remove('active');
+            }
+        });
+
+        // ========== PRODUCT CATEGORY FILTERING ==========
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const category = btn.getAttribute('data-category');
+                
+                // Show/hide products based on category
+                productCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // ========== PRICING TOGGLE ==========
+        document.getElementById('billing-toggle').addEventListener('change', function() {
+            const monthlyPrices = [179, 379, 779];
+            const annualPrices = [143, 303, 623]; // 20% discount
+            const priceElements = document.querySelectorAll('.price-amount');
+            
+            if (this.checked) {
+                // Show annual prices
+                priceElements.forEach((el, index) => {
+                    el.textContent = 'R' + annualPrices[index];
+                });
+            } else {
+                // Show monthly prices
+                priceElements.forEach((el, index) => {
+                    el.textContent = 'R' + monthlyPrices[index];
+                });
+            }
+        });
+        
+        // ========== FORM SUBMISSION ==========
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would handle login here
+            alert('Login functionality would be implemented here');
+            loginModal.classList.remove('active');
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would handle signup here
+            alert('Account creation functionality would be implemented here');
+            signupModal.classList.remove('active');
+        });
+        
+        // ========== SCROLL ANIMATIONS ==========
+        function checkVisibility() {
+            const elements = document.querySelectorAll('.section-header, .feature-card, .pricing-card, .product-card, .cta-content');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            checkVisibility();
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            checkVisibility();
+            
+            // Animate feature cards with delay
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // Animate pricing cards with delay
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            pricingCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // Animate product cards with delay
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.05}s`;
+            });
+        });
+    </script>
+</body>
+</html>
